@@ -21,9 +21,12 @@ public class VisualMod implements ClientModInitializer {
             "key.arlakenti.menu", InputUtil.Type.KEYSYM, 48, "category.arlakenti"
         ));
 
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while (menuKey.wasPressed()) {
-                client.setScreen(new ClickGui());
+        ClientTickEvents.END_CLIENT_TICK.register(new ClientTickEvents.EndTick() {
+            @Override
+            public void onEndTick(MinecraftClient client) {
+                while (menuKey.wasPressed()) {
+                    client.setScreen(new ClickGui());
+                }
             }
         });
 
@@ -38,9 +41,11 @@ public class VisualMod implements ClientModInitializer {
                 context.fill(screenW / 2 - 6, screenH / 2 - 1, screenW / 2 + 6, screenH / 2 + 1, 0xFFFFFFFF);
             }
 
-            if (targetHud && client.crosshairTarget instanceof EntityHitResult hit) {
+            if (targetHud && client.crosshairTarget instanceof EntityHitResult) {
+                EntityHitResult hit = (EntityHitResult) client.crosshairTarget;
                 Entity target = hit.getEntity();
-                if (target instanceof LivingEntity living) {
+                if (target instanceof LivingEntity) {
+                    LivingEntity living = (LivingEntity) target;
                     context.fill(screenW / 2 - 60, screenH - 70, screenW / 2 + 60, screenH - 30, 0x80000000);
                     context.drawCenteredTextWithShadow(client.textRenderer, "\u00A7c" + living.getName().getString(), screenW / 2, screenH - 65, 0xFFFFFF);
                     context.drawCenteredTextWithShadow(client.textRenderer, "\u00A7aHP: " + living.getHealth(), screenW / 2, screenH - 50, 0xFFFFFF);

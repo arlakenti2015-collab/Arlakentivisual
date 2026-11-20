@@ -5,19 +5,27 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.text.Text;
 
 public class ClickGui extends Screen {
-    protected ClickGui() { super(Text.literal("Arlakenti v3")); }
+    public ClickGui() { super(Text.literal("Arlakenti v3")); }
 
     @Override
     protected void init() {
-        this.addDrawableChild(ButtonWidget.builder(Text.literal("TargetHUD: " + (VisualMod.targetHud ? "ON" : "OFF")), btn -> {
-            VisualMod.targetHud = !VisualMod.targetHud;
-            btn.setMessage(Text.literal("TargetHUD: " + (VisualMod.targetHud ? "ON" : "OFF")));
-        }).dimensions(20, 40, 120, 20).build());
+        ButtonWidget btnTarget = ButtonWidget.builder(Text.literal("TargetHUD: " + (VisualMod.targetHud ? "ON" : "OFF")), new ButtonWidget.PressAction() {
+            @Override
+            public void onPress(ButtonWidget button) {
+                VisualMod.targetHud = !VisualMod.targetHud;
+                button.setMessage(Text.literal("TargetHUD: " + (VisualMod.targetHud ? "ON" : "OFF")));
+            }
+        }).dimensions(20, 40, 120, 20).build();
+        this.addDrawableChild(btnTarget);
 
-        this.addDrawableChild(ButtonWidget.builder(Text.literal("Crosshair: " + (VisualMod.customCrosshair ? "ON" : "OFF")), btn -> {
-            VisualMod.customCrosshair = !VisualMod.customCrosshair;
-            btn.setMessage(Text.literal("Crosshair: " + (VisualMod.customCrosshair ? "ON" : "OFF")));
-        }).dimensions(20, 70, 120, 20).build());
+        ButtonWidget btnCross = ButtonWidget.builder(Text.literal("Crosshair: " + (VisualMod.customCrosshair ? "ON" : "OFF")), new ButtonWidget.PressAction() {
+            @Override
+            public void onPress(ButtonWidget button) {
+                VisualMod.customCrosshair = !VisualMod.customCrosshair;
+                button.setMessage(Text.literal("Crosshair: " + (VisualMod.customCrosshair ? "ON" : "OFF")));
+            }
+        }).dimensions(20, 70, 120, 20).build();
+        this.addDrawableChild(btnCross);
     }
 
     @Override
