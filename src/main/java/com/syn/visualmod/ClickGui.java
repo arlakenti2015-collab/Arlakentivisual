@@ -9,25 +9,16 @@ public class ClickGui extends Screen {
 
     @Override
     protected void init() {
-        this.addDrawableChild(ButtonWidget.builder(Text.literal("TargetHUD: " + (VisualMod.targetHud ? "ON" : "OFF")), btn -> {
-            VisualMod.targetHud = !VisualMod.targetHud;
-            btn.setMessage(Text.literal("TargetHUD: " + (VisualMod.targetHud ? "ON" : "OFF")));
-        }).dimensions(20, 40, 120, 20).build());
-
-        this.addDrawableChild(ButtonWidget.builder(Text.literal("Crosshair: " + (VisualMod.customCrosshair ? "ON" : "OFF")), btn -> {
-            VisualMod.customCrosshair = !VisualMod.customCrosshair;
-            btn.setMessage(Text.literal("Crosshair: " + (VisualMod.customCrosshair ? "ON" : "OFF")));
-        }).dimensions(20, 70, 120, 20).build());
-
-        this.addDrawableChild(ButtonWidget.builder(Text.literal("ArmorHUD: " + (VisualMod.armorHud ? "ON" : "OFF")), btn -> {
-            VisualMod.armorHud = !VisualMod.armorHud;
-            btn.setMessage(Text.literal("ArmorHUD: " + (VisualMod.armorHud ? "ON" : "OFF")));
-        }).dimensions(20, 100, 120, 20).build());
-        
-        this.addDrawableChild(ButtonWidget.builder(Text.literal("PotionHUD: " + (VisualMod.potionHud ? "ON" : "OFF")), btn -> {
-            VisualMod.potionHud = !VisualMod.potionHud;
-            btn.setMessage(Text.literal("PotionHUD: " + (VisualMod.potionHud ? "ON" : "OFF")));
-        }).dimensions(20, 130, 120, 20).build());
+        int y = 40;
+        this.addDrawableChild(ButtonWidget.builder(Text.literal("TargetHUD: " + (VisualMod.targetHud ? "ON" : "OFF")), b -> { VisualMod.targetHud = !VisualMod.targetHud; b.setMessage(Text.literal("TargetHUD: " + (VisualMod.targetHud ? "ON" : "OFF"))); }).dimensions(20, y, 120, 20).build());
+        y += 30;
+        this.addDrawableChild(ButtonWidget.builder(Text.literal("Crosshair: " + (VisualMod.customCrosshair ? "ON" : "OFF")), b -> { VisualMod.customCrosshair = !VisualMod.customCrosshair; b.setMessage(Text.literal("Crosshair: " + (VisualMod.customCrosshair ? "ON" : "OFF"))); }).dimensions(20, y, 120, 20).build());
+        y += 30;
+        this.addDrawableChild(ButtonWidget.builder(Text.literal("ArmorHUD: " + (VisualMod.armorHud ? "ON" : "OFF")), b -> { VisualMod.armorHud = !VisualMod.armorHud; b.setMessage(Text.literal("ArmorHUD: " + (VisualMod.armorHud ? "ON" : "OFF"))); }).dimensions(20, y, 120, 20).build());
+        y += 30;
+        this.addDrawableChild(ButtonWidget.builder(Text.literal("Hitboxes: " + (VisualMod.hitboxes ? "ON" : "OFF")), b -> { VisualMod.hitboxes = !VisualMod.hitboxes; b.setMessage(Text.literal("Hitboxes: " + (VisualMod.hitboxes ? "ON" : "OFF"))); }).dimensions(20, y, 120, 20).build());
+        y += 30;
+        this.addDrawableChild(ButtonWidget.builder(Text.literal("Fullbright: " + (VisualMod.fullbright ? "ON" : "OFF")), b -> { VisualMod.fullbright = !VisualMod.fullbright; b.setMessage(Text.literal("Fullbright: " + (VisualMod.fullbright ? "ON" : "OFF"))); }).dimensions(20, y, 120, 20).build());
     }
 
     @Override
