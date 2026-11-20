@@ -2,7 +2,6 @@ package com.syn.visualmod;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
@@ -10,18 +9,13 @@ import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.item.ItemStack;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Vec3d;
 
 public class VisualMod implements ClientModInitializer {
     public static boolean targetHud = true;
     public static boolean customCrosshair = true;
     public static boolean armorHud = true;
-    public static boolean hitboxes = true;
     public static boolean fullbright = false;
 
     @Override
@@ -45,10 +39,13 @@ public class VisualMod implements ClientModInitializer {
             int screenW = context.getScaledWindowWidth();
             int screenH = context.getScaledWindowHeight();
 
+            // 1. Прицел
             if (customCrosshair) {
                 context.fill(screenW / 2 - 1, screenH / 2 - 6, screenW / 2 + 1, screenH / 2 + 6, 0xFFFFFFFF);
                 context.fill(screenW / 2 - 6, screenH / 2 - 1, screenW / 2 + 6, screenH / 2 + 1, 0xFFFFFFFF);
             }
+
+            // 2. Броня
             if (armorHud) {
                 int yOffset = 40;
                 for (ItemStack stack : client.player.getArmorItems()) {
@@ -58,31 +55,14 @@ public class VisualMod implements ClientModInitializer {
                     }
                 }
             }
+
+            // 3. TargetHUD
             if (targetHud && client.crosshairTarget instanceof EntityHitResult hit) {
                 Entity target = hit.getEntity();
                 if (target instanceof LivingEntity living) {
                     context.fill(screenW / 2 - 60, screenH - 70, screenW / 2 + 60, screenH - 30, 0x80000000);
                     context.drawTextWithShadow(client.textRenderer, living.getName().getString(), screenW / 2 - 30, screenH - 65, 0xFF5555);
                     context.drawTextWithShadow(client.textRenderer, "HP: " + living.getHealth(), screenW / 2 - 20, screenH - 50, 0x55FF55);
-                }
-            }
-        });
-
-        WorldRenderEvents.AFTER_ENTITIES.register((context) -> {
-            MinecraftClient client = MinecraftClient.getInstance();
-            if (client.world == null || client.player == null) return;
-            MatrixStack matrices = context.matrixStack();
-            Vec3d camPos = context.camera().getPos();
-
-            if (hitboxes) {
-                for (PlayerEntity player : client.world.getPlayers()) {
-                    if (player == client.player) continue;
-                    if (player.squaredDistanceTo(client.player) > 4096) continue;
-                    matrices.push();
-                    Vec3d pos = player.getPos().subtract(camPos);
-                    Box box = player.getBoundingBox().offset(pos.x, pos.y, pos.z);
-                    RenderUtils.drawBox(matrices, box, 1f, 0f, 0f, 1f);
-                    matrices.pop();
                 }
             }
         });

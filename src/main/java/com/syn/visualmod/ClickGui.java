@@ -16,8 +16,6 @@ public class ClickGui extends Screen {
         y += 30;
         this.addDrawableChild(ButtonWidget.builder(Text.literal("ArmorHUD: " + (VisualMod.armorHud ? "ON" : "OFF")), b -> { VisualMod.armorHud = !VisualMod.armorHud; b.setMessage(Text.literal("ArmorHUD: " + (VisualMod.armorHud ? "ON" : "OFF"))); }).dimensions(20, y, 120, 20).build());
         y += 30;
-        this.addDrawableChild(ButtonWidget.builder(Text.literal("Hitboxes: " + (VisualMod.hitboxes ? "ON" : "OFF")), b -> { VisualMod.hitboxes = !VisualMod.hitboxes; b.setMessage(Text.literal("Hitboxes: " + (VisualMod.hitboxes ? "ON" : "OFF"))); }).dimensions(20, y, 120, 20).build());
-        y += 30;
         this.addDrawableChild(ButtonWidget.builder(Text.literal("Fullbright: " + (VisualMod.fullbright ? "ON" : "OFF")), b -> { VisualMod.fullbright = !VisualMod.fullbright; b.setMessage(Text.literal("Fullbright: " + (VisualMod.fullbright ? "ON" : "OFF"))); }).dimensions(20, y, 120, 20).build());
     }
 
