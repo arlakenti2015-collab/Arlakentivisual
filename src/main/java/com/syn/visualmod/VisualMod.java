@@ -10,14 +10,9 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.item.ItemStack;
-import net.minecraft.entity.effect.StatusEffectInstance;
 
 public class VisualMod implements ClientModInitializer {
     public static boolean targetHud = true;
-    public static boolean armorHud = true;
-    public static boolean hitboxes = true;
-    public static boolean potionHud = true;
     public static boolean customCrosshair = true;
 
     @Override
@@ -43,33 +38,12 @@ public class VisualMod implements ClientModInitializer {
                 context.fill(screenW / 2 - 6, screenH / 2 - 1, screenW / 2 + 6, screenH / 2 + 1, 0xFFFFFFFF);
             }
 
-            if (armorHud) {
-                int yOffset = 40;
-                for (ItemStack stack : client.player.getArmorItems()) {
-                    if (!stack.isEmpty()) {
-                        context.drawItem(stack, screenW - 30, screenH - yOffset);
-                        context.drawItemInSlot(client.textRenderer, stack, screenW - 30, screenH - yOffset);
-                        yOffset += 20;
-                    }
-                }
-            }
-
-            if (potionHud) {
-                int yOffset = 40;
-                for (StatusEffectInstance effect : client.player.getStatusEffects()) {
-                    String name = effect.getEffectType().value().getName().getString();
-                    String duration = " " + (effect.getDuration() / 20) + "s";
-                    context.drawTextWithShadow(client.textRenderer, name + duration, 10, yOffset, 0xFFFFFF);
-                    yOffset += 12;
-                }
-            }
-
             if (targetHud && client.crosshairTarget instanceof EntityHitResult hit) {
                 Entity target = hit.getEntity();
                 if (target instanceof LivingEntity living) {
                     context.fill(screenW / 2 - 60, screenH - 70, screenW / 2 + 60, screenH - 30, 0x80000000);
                     context.drawCenteredTextWithShadow(client.textRenderer, "\u00A7c" + living.getName().getString(), screenW / 2, screenH - 65, 0xFFFFFF);
-                    context.drawCenteredTextWithShadow(client.textRenderer, "\u00A7aHP: " + living.getHealth() + " / " + living.getMaxHealth(), screenW / 2, screenH - 50, 0xFFFFFF);
+                    context.drawCenteredTextWithShadow(client.textRenderer, "\u00A7aHP: " + living.getHealth(), screenW / 2, screenH - 50, 0xFFFFFF);
                 }
             }
         });

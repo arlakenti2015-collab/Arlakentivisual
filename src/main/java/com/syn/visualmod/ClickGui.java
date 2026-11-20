@@ -10,20 +10,14 @@ public class ClickGui extends Screen {
     @Override
     protected void init() {
         this.addDrawableChild(ButtonWidget.builder(Text.literal("TargetHUD: " + (VisualMod.targetHud ? "ON" : "OFF")), btn -> {
-            VisualMod.targetHud = !VisualMod.targetHud; btn.setMessage(Text.literal("TargetHUD: " + (VisualMod.targetHud ? "ON" : "OFF")));
+            VisualMod.targetHud = !VisualMod.targetHud;
+            btn.setMessage(Text.literal("TargetHUD: " + (VisualMod.targetHud ? "ON" : "OFF")));
         }).dimensions(20, 40, 120, 20).build());
 
-        this.addDrawableChild(ButtonWidget.builder(Text.literal("ArmorHUD: " + (VisualMod.armorHud ? "ON" : "OFF")), btn -> {
-            VisualMod.armorHud = !VisualMod.armorHud; btn.setMessage(Text.literal("ArmorHUD: " + (VisualMod.armorHud ? "ON" : "OFF")));
-        }).dimensions(20, 70, 120, 20).build());
-
         this.addDrawableChild(ButtonWidget.builder(Text.literal("Crosshair: " + (VisualMod.customCrosshair ? "ON" : "OFF")), btn -> {
-            VisualMod.customCrosshair = !VisualMod.customCrosshair; btn.setMessage(Text.literal("Crosshair: " + (VisualMod.customCrosshair ? "ON" : "OFF")));
-        }).dimensions(20, 100, 120, 20).build());
-
-        this.addDrawableChild(ButtonWidget.builder(Text.literal("PotionHUD: " + (VisualMod.potionHud ? "ON" : "OFF")), btn -> {
-            VisualMod.potionHud = !VisualMod.potionHud; btn.setMessage(Text.literal("PotionHUD: " + (VisualMod.potionHud ? "ON" : "OFF")));
-        }).dimensions(20, 130, 120, 20).build());
+            VisualMod.customCrosshair = !VisualMod.customCrosshair;
+            btn.setMessage(Text.literal("Crosshair: " + (VisualMod.customCrosshair ? "ON" : "OFF")));
+        }).dimensions(20, 70, 120, 20).build());
     }
 
     @Override
