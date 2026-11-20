@@ -5,5 +5,5 @@
   "name": "Arlakenti Visual",
   "environment": "client",
   "entrypoints": { "client": ["com.syn.visualmod.VisualMod"] },
-  "depends": { "fabricloader": ">=0.15.0", "minecraft": "~1.20.1", "java": ">=17", "fabric-api": "*" }
+  "depends": { "fabricloader": ">=0.15.0", "minecraft": "~1.21.1", "java": ">=21", "fabric-api": "*" }
 }
