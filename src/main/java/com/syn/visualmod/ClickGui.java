@@ -3,6 +3,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.text.Text;
+import com.syn.visualmod.modules.Module;
 
 public class ClickGui extends Screen {
     public ClickGui() { super(Text.literal("Arlakenti v3")); }
@@ -10,13 +11,13 @@ public class ClickGui extends Screen {
     @Override
     protected void init() {
         int y = 40;
-        this.addDrawableChild(ButtonWidget.builder(Text.literal("TargetHUD: " + (VisualMod.targetHud ? "ON" : "OFF")), b -> { VisualMod.targetHud = !VisualMod.targetHud; b.setMessage(Text.literal("TargetHUD: " + (VisualMod.targetHud ? "ON" : "OFF"))); }).dimensions(20, y, 120, 20).build());
-        y += 30;
-        this.addDrawableChild(ButtonWidget.builder(Text.literal("Crosshair: " + (VisualMod.customCrosshair ? "ON" : "OFF")), b -> { VisualMod.customCrosshair = !VisualMod.customCrosshair; b.setMessage(Text.literal("Crosshair: " + (VisualMod.customCrosshair ? "ON" : "OFF"))); }).dimensions(20, y, 120, 20).build());
-        y += 30;
-        this.addDrawableChild(ButtonWidget.builder(Text.literal("ArmorHUD: " + (VisualMod.armorHud ? "ON" : "OFF")), b -> { VisualMod.armorHud = !VisualMod.armorHud; b.setMessage(Text.literal("ArmorHUD: " + (VisualMod.armorHud ? "ON" : "OFF"))); }).dimensions(20, y, 120, 20).build());
-        y += 30;
-        this.addDrawableChild(ButtonWidget.builder(Text.literal("Fullbright: " + (VisualMod.fullbright ? "ON" : "OFF")), b -> { VisualMod.fullbright = !VisualMod.fullbright; b.setMessage(Text.literal("Fullbright: " + (VisualMod.fullbright ? "ON" : "OFF"))); }).dimensions(20, y, 120, 20).build());
+        for (Module m : ModuleManager.modules) {
+            this.addDrawableChild(ButtonWidget.builder(Text.literal(m.name + ": " + (m.enabled ? "ON" : "OFF")), b -> {
+                m.toggle();
+                b.setMessage(Text.literal(m.name + ": " + (m.enabled ? "ON" : "OFF")));
+            }).dimensions(20, y, 140, 20).build());
+            y += 30;
+        }
     }
 
     @Override
